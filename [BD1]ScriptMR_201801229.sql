@@ -1,3 +1,21 @@
+DROP TABLE Cliente CASCADE CONSTRAINTS;
+DROP TABLE Tienda CASCADE CONSTRAINTS;
+DROP TABLE Ciudad CASCADE CONSTRAINTS;
+DROP TABLE Pais CASCADE CONSTRAINTS;
+DROP TABLE Empleado CASCADE CONSTRAINTS;
+DROP TABLE Factura CASCADE CONSTRAINTS;
+DROP TABLE Categoria CASCADE CONSTRAINTS;
+DROP TABLE Pelicula CASCADE CONSTRAINTS;
+DROP TABLE Idioma CASCADE CONSTRAINTS;
+DROP TABLE Actor CASCADE CONSTRAINTS;
+DROP TABLE Pelicula_Actor CASCADE CONSTRAINTS;
+DROP TABLE Pelicula_Categoria CASCADE CONSTRAINTS;
+DROP TABLE Pelicula_Idioma CASCADE CONSTRAINTS;
+DROP TABLE Inventario CASCADE CONSTRAINTS;
+DROP TABLE Encargado CASCADE CONSTRAINTS;
+DROP TABLE Clasificacion CASCADE CONSTRAINTS;
+
+
 /*Tabla Pais*/
 CREATE TABLE Pais(
 	Id_Pais NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
@@ -14,7 +32,6 @@ COMMIT;
 CREATE TABLE Ciudad(
 	Id_Ciudad NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
 	Nombre VARCHAR2(250) NOT NULL,
-	Codigo_Postal NUMBER NOT NULL,
 	Pais NUMBER NOT NULL
 );
 
@@ -32,7 +49,7 @@ COMMIT;
 /*Tabla Tienda*/
 CREATE TABLE Tienda(
 	Id_Tienda NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
-	Nombre_Tienda VARCHAR2(250) NOT NULL,
+	Nombre VARCHAR2(250) NOT NULL,
 	Direccion VARCHAR2(250) NOT NULL,
 	Ciudad NUMBER NOT NULL
 );
@@ -53,12 +70,12 @@ CREATE TABLE Cliente(
 	Id_Cliente NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
 	Correo_Electronico VARCHAR2(250) NOT NULL,
 	Nombre VARCHAR2(250) NOT NULL,
-	Apellido VARCHAR2(250) NOT NULL,
 	Direccion VARCHAR2(250) NOT NULL,
 	Estado VARCHAR2(250) NOT NULL,
 	Fecha_Registro TIMESTAMP NOT NULL,
 	Tienda_Preferida NUMBER NOT NULL,
-	Ciudad NUMBER NOT NULL
+	Ciudad NUMBER NOT NULL,
+	Codigo_Postal NUMBER NOT NULL
 );
 
 ALTER TABLE Cliente
@@ -84,11 +101,8 @@ CREATE TABLE Empleado(
 	Usuario VARCHAR2(250) NOT NULL,
 	Password VARCHAR2(250) NOT NULL,
 	Nombre VARCHAR2(250) NOT NULL,
-	Apellido VARCHAR2(250) NOT NULL,
 	Tienda_Trabajo NUMBER NOT NULL,
 	Estado VARCHAR2(250) NOT NULL,
-	Encargado VARCHAR2(250) NOT NULL,
-	Direccion VARCHAR2(250) NOT NULL,
 	Ciudad NUMBER NOT NULL
 );
 
@@ -108,28 +122,33 @@ ALTER TABLE Empleado
 
 COMMIT;
 
-/*Tabla Inventario*/
-CREATE TABLE Inventario(
-	Id_Inventario NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+/*Tabla Encargado*/
+
+CREATE TABLE Encargado(
+	Empleado NUMBER NOT NULL,
 	Tienda NUMBER NOT NULL
 );
 
-ALTER TABLE Inventario
-    ADD CONSTRAINT PK_Inventario
-        PRIMARY KEY(Id_Inventario);
-
-ALTER TABLE Inventario
-    ADD CONSTRAINT FK_Tienda_Inventario
+ALTER TABLE Encargado
+    ADD CONSTRAINT PK_Encargado
+        PRIMARY KEY(Empleado, Tienda);
+       
+ALTER TABLE Encargado
+    ADD CONSTRAINT FK_Encargado_Empleado
+        FOREIGN KEY (Empleado)
+            REFERENCES Empleado(Id_Empleado) ON DELETE CASCADE;
+           
+ALTER TABLE Encargado
+    ADD CONSTRAINT FK_Encargado_Tienda
         FOREIGN KEY (Tienda)
             REFERENCES Tienda(Id_Tienda) ON DELETE CASCADE;
-
+           
 COMMIT;
 
 /*Tabla Actor*/
 CREATE TABLE Actor(
 	Id_Actor NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
-	Nombre VARCHAR2(250) NOT NULL,
-	Apellido VARCHAR2(250) NOT NULL 
+	Nombre VARCHAR2(250) NOT NULL
 );
 
 ALTER TABLE Actor
@@ -162,19 +181,29 @@ ALTER TABLE Idioma
 
 COMMIT;
 
+/*Tabla Clasificacion*/
+CREATE TABLE Clasificacion(
+	Id_Clasificacion NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+	Clasificacion VARCHAR2(250) NOT NULL
+);
+
+ALTER TABLE Clasificacion
+    ADD CONSTRAINT PK_Clasificacion
+        PRIMARY KEY(Id_Clasificacion);
+
+COMMIT;
+
 /*Tabla Pelicula*/
 CREATE TABLE Pelicula(
 	Id_Pelicula NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
 	Nombre VARCHAR2(250) NOT NULL,
 	Descripcion VARCHAR2(250) NOT NULL,
 	Ano_Lanzamiento NUMBER NOT NULL,
-	Dias_Reanta NUMBER NOT NULL,
+	Dias_Renta NUMBER NOT NULL,
 	Costo_Renta NUMBER NOT NULL,
 	Duracion NUMBER NOT NULL,
 	Costo_Por_Dano NUMBER NOT NULL,
-	Clasificacion VARCHAR2(250) NOT NULL,
-	Cantidad NUMBER NOT NULL,
-	Inventario NUMBER NOT NULL
+	Clasificacion NUMBER NOT NULL
 );
 
 ALTER TABLE Pelicula
@@ -182,9 +211,33 @@ ALTER TABLE Pelicula
         PRIMARY KEY(Id_Pelicula);
 
 ALTER TABLE Pelicula
-    ADD CONSTRAINT FK_Inventario_Pelicula
-        FOREIGN KEY (Inventario)
-            REFERENCES Inventario(Id_Inventario) ON DELETE CASCADE;       
+    ADD CONSTRAINT FK_Pelicula_Clasificacion
+        FOREIGN KEY (Clasificacion)
+            REFERENCES Clasificacion(Id_Clasificacion) ON DELETE CASCADE;
+
+COMMIT;
+
+/*Tabla Inventario*/
+CREATE TABLE Inventario(
+	Id_Inventario NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+	Tienda NUMBER NOT NULL,
+	Pelicula NUMBER NOT NULL,
+	Cantidad NUMBER DEFAULT 0
+);
+
+ALTER TABLE Inventario
+    ADD CONSTRAINT PK_Inventario
+        PRIMARY KEY(Id_Inventario);
+
+ALTER TABLE Inventario
+    ADD CONSTRAINT FK_Tienda_Inventario
+        FOREIGN KEY (Tienda)
+            REFERENCES Tienda(Id_Tienda) ON DELETE CASCADE;
+           
+ALTER TABLE Inventario
+    ADD CONSTRAINT FK_Pelicula_Inventario
+        FOREIGN KEY (Pelicula)
+            REFERENCES Pelicula(Id_Pelicula) ON DELETE CASCADE;
 
 COMMIT;
 
@@ -235,8 +288,7 @@ COMMIT;
 /*Tabla Pelicula_Idioma*/
 CREATE TABLE Pelicula_Idioma(
 	Pelicula NUMBER NOT NULL,
-	Idioma NUMBER NOT NULL,
-	Original VARCHAR2(250) NOT NULL	
+	Idioma NUMBER NOT NULL
 );
 
 ALTER TABLE Pelicula_Idioma
@@ -261,9 +313,11 @@ CREATE TABLE Factura(
 	Cliente NUMBER NOT NULL,
 	Empleado NUMBER NOT NULL,
 	Fecha_Renta TIMESTAMP NOT NULL,
-	Fecha_Retorno TIMESTAMP NOT NULL,
+	Fecha_Retorno TIMESTAMP,
 	Monto_A_Pagar NUMBER NOT NULL,
-	Fecha_Pago TIMESTAMP NOT NULL
+	Fecha_Pago TIMESTAMP NOT NULL,
+	Pelicula NUMBER NOT NULL,
+	Tienda NUMBER NOT NULL
 );
 
 ALTER TABLE Factura
@@ -279,45 +333,17 @@ ALTER TABLE Factura
     ADD CONSTRAINT FK_Empleado_Factura
         FOREIGN KEY (Empleado)
             REFERENCES Empleado(Id_Empleado) ON DELETE CASCADE;
-
-COMMIT;
-
-/*Tabla Detalle_Factura*/
-CREATE TABLE Detalle_Factura(
-	Id_Detalle NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
-	Factura NUMBER NOT NULL,
-	Pelicula NUMBER NOT NULL
-);
-
-ALTER TABLE Detalle_Factura
-    ADD CONSTRAINT PK_Detalle_Factura
-        PRIMARY KEY(Id_Detalle);
-
-ALTER TABLE Detalle_Factura
-    ADD CONSTRAINT FK_Factura_Detalle_Factura
-        FOREIGN KEY (Factura)
-            REFERENCES Factura(Id_Factura) ON DELETE CASCADE;  
            
-ALTER TABLE Detalle_Factura
-    ADD CONSTRAINT FK_Pelicula_Detalle_Factura
+ALTER TABLE Factura
+    ADD CONSTRAINT FK_Pelicula_Factura
         FOREIGN KEY (Pelicula)
             REFERENCES Pelicula(Id_Pelicula) ON DELETE CASCADE;
+           
+ALTER TABLE Factura
+    ADD CONSTRAINT FK_Tienda_Factura
+        FOREIGN KEY (Tienda)
+            REFERENCES Tienda(Id_Tienda) ON DELETE CASCADE;
 
 COMMIT;
 
 
-DROP TABLE Cliente CASCADE CONSTRAINTS;
-DROP TABLE Tienda CASCADE CONSTRAINTS;
-DROP TABLE Ciudad CASCADE CONSTRAINTS;
-DROP TABLE Pais CASCADE CONSTRAINTS;
-DROP TABLE Empleado CASCADE CONSTRAINTS;
-DROP TABLE Factura CASCADE CONSTRAINTS;
-DROP TABLE Detalle_Factura CASCADE CONSTRAINTS;
-DROP TABLE Categoria CASCADE CONSTRAINTS;
-DROP TABLE Pelicula CASCADE CONSTRAINTS;
-DROP TABLE Idioma CASCADE CONSTRAINTS;
-DROP TABLE Actor CASCADE CONSTRAINTS;
-DROP TABLE Pelicula_Actor CASCADE CONSTRAINTS;
-DROP TABLE Pelicula_Categoria CASCADE CONSTRAINTS;
-DROP TABLE Pelicula_Idioma CASCADE CONSTRAINTS;
-DROP TABLE Inventario CASCADE CONSTRAINTS;
