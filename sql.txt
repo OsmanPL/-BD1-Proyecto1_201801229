@@ -1,0 +1,1 @@
+sqlldr userid=OSMANPEREZ/201801229@34.138.9.97:1521/ORCL18 control=[BD1]ArchivoControl.ctl

@@ -1,0 +1,133 @@
+
+SQL*Loader: Release 18.0.0.0.0 - Production on Sáb Sep 25 08:56:08 2021
+Version 18.4.0.0.0
+
+Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+
+Archivo de Control:   [BD1]ArchivoControl.ctl
+Juego de caracteres UTF8 especificado para todas las entradas.
+
+Archivo de Datos:      C:\Users\l4kz4\Downloads\BlockbusterData_PRUEBA.csv
+  Archivo de Errores:     BlockbusterData_PRUEBA.bad
+  Desechar Archivo:  ninguno especificado
+ 
+ (Permitir todos los registros desechados)
+
+Número a cargar: ALL
+Número que omitir: 1
+Errores permitidos: 50
+Matriz de enlace:     250 filas, máximo de 1048576 bytes
+Continuación:    ninguno especificado
+Ruta de acceso utilizada:      Convencional
+
+Tabla TEMPORAL, cargada de cada registro lógico.
+Opción INSERT activa para esta tabla: TRUNCATE
+Opción TRAILING NULLCOLS activada
+
+   Nombre Columna                  Posición   Long  Term Entorno Tipo de Dato
+------------------------------ ---------- ----- ---- ---- ---------------------
+NOMBRE_CLIENTE                      FIRST     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:NOMBRE_CLIENTE,'-',NULL,:NOMBRE_CLIENTE)"
+CORREO_CLIENTE                       NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:CORREO_CLIENTE,'-',NULL,:CORREO_CLIENTE)"
+CLIENTE_ACTIVO                       NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:CLIENTE_ACTIVO,'-',NULL,:CLIENTE_ACTIVO)"
+FECHA_CREACION                       NEXT     *   ;       DATETIME DD-MM-YYYY      
+    Cadena SQL para la columna: "decode(:FECHA_CREACION,'-',NULL,:FECHA_CREACION)"
+TIENDA_PREFERIDA                     NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:TIENDA_PREFERIDA,'-',NULL,:TIENDA_PREFERIDA)"
+DIRECCION_CLIENTE                    NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:DIRECCION_CLIENTE,'-',NULL,:DIRECCION_CLIENTE)"
+CODIGO_POSTAL_CLIENTE                NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:CODIGO_POSTAL_CLIENTE,'-',NULL,:CODIGO_POSTAL_CLIENTE)"
+CIUDAD_CLIENTE                       NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:CIUDAD_CLIENTE,'-',NULL,:CIUDAD_CLIENTE)"
+PAIS_CLIENTE                         NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:PAIS_CLIENTE,'-',NULL,:PAIS_CLIENTE)"
+FECHA_RENTA                          NEXT     *   ;       DATETIME DD-MM-YYYY HH24:MI
+    Cadena SQL para la columna: "decode(:FECHA_RENTA,'-',NULL,:FECHA_RENTA)"
+FECHA_RETORNO                        NEXT     *   ;       DATETIME DD-MM-YYYY HH24:MI
+    Cadena SQL para la columna: "decode(:FECHA_RETORNO,'-',NULL,:FECHA_RETORNO)"
+MONTO_A_PAGAR                        NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:MONTO_A_PAGAR,'-',NULL,:MONTO_A_PAGAR)"
+FECHA_PAGO                           NEXT     *   ;       DATETIME DD-MM-YYYY HH24:MI
+    Cadena SQL para la columna: "decode(:FECHA_PAGO,'-',NULL,:FECHA_PAGO)"
+NOMBRE_EMPLEADO                      NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:NOMBRE_EMPLEADO,'-',NULL,:NOMBRE_EMPLEADO)"
+CORREO_EMPLEADO                      NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:CORREO_EMPLEADO,'-',NULL,:CORREO_EMPLEADO)"
+EMPLEADO_ACTIVO                      NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:EMPLEADO_ACTIVO,'-',NULL,:EMPLEADO_ACTIVO)"
+TIENDA_EMPLEADO                      NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:TIENDA_EMPLEADO,'-',NULL,:TIENDA_EMPLEADO)"
+USUARIO_EMPLEADO                     NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:USUARIO_EMPLEADO,'-',NULL,:USUARIO_EMPLEADO)"
+CONTRASENA_EMPLEADO                  NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:CONTRASENA_EMPLEADO,'-',NULL,:CONTRASENA_EMPLEADO)"
+DIRECCION_EMPLEADO                   NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:DIRECCION_EMPLEADO,'-',NULL,:DIRECCION_EMPLEADO)"
+CODIGO_POSTAL_EMPLEADO               NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:CODIGO_POSTAL_EMPLEADO,'-',NULL,:CODIGO_POSTAL_EMPLEADO)"
+CIUDAD_EMPLEADO                      NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:CIUDAD_EMPLEADO,'-',NULL,:CIUDAD_EMPLEADO)"
+PAIS_EMPLEADO                        NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:PAIS_EMPLEADO,'-',NULL,:PAIS_EMPLEADO)"
+NOMBRE_TIENDA                        NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:NOMBRE_TIENDA,'-',NULL,:NOMBRE_TIENDA)"
+ENCARGADO_TIENDA                     NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:ENCARGADO_TIENDA,'-',NULL,:ENCARGADO_TIENDA)"
+DIRECCION_TIENDA                     NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:DIRECCION_TIENDA,'-',NULL,:DIRECCION_TIENDA)"
+CODIGO_POSTAL_TIENDA                 NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:CODIGO_POSTAL_TIENDA,'-',NULL,:CODIGO_POSTAL_TIENDA)"
+CIUDAD_TIENDA                        NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:CIUDAD_TIENDA,'-',NULL,:CIUDAD_TIENDA)"
+PAIS_TIENDA                          NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:PAIS_TIENDA,'-',NULL,:PAIS_TIENDA)"
+TIENDA_PELICULA                      NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:TIENDA_PELICULA,'-',NULL,:TIENDA_PELICULA)"
+NOMBRE_PELICULA                      NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:NOMBRE_PELICULA,'-',NULL,:NOMBRE_PELICULA)"
+DESCRIPCION_PELICULA                 NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:DESCRIPCION_PELICULA,'-',NULL,:DESCRIPCION_PELICULA)"
+ANO_LANZAMIENTO                      NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:ANO_LANZAMIENTO,'-',NULL,:ANO_LANZAMIENTO)"
+DIAS_RENTA                           NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:DIAS_RENTA,'-',NULL,:DIAS_RENTA)"
+COSTO_RENTA                          NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:COSTO_RENTA,'-',NULL,:COSTO_RENTA)"
+DURACION                             NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:DURACION,'-',NULL,:DURACION)"
+COSTO_POR_DANO                       NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:COSTO_POR_DANO,'-',NULL,:COSTO_POR_DANO)"
+CLASIFICACION                        NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:CLASIFICACION,'-',NULL,:CLASIFICACION)"
+LENGUAJE_PELICULA                    NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:LENGUAJE_PELICULA,'-',NULL,:LENGUAJE_PELICULA)"
+CATEGORIA_PELICULA                   NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:CATEGORIA_PELICULA,'-',NULL,:CATEGORIA_PELICULA)"
+ACTOR_PELICULA                       NEXT     *   ;       CHARACTER            
+    Cadena SQL para la columna: "decode(:ACTOR_PELICULA,'-',NULL,:ACTOR_PELICULA)"
+
+el valor utilizado para el parámetro ROWS ha cambiado de 250 a 99
+
+Tabla TEMPORAL:
+  89471 Filas cargadas correctamente.
+  0 Filas no cargadas debido a errores de datos.
+  0 Filas no cargadas porque todas las cláusulas WHEN han fallado.
+  0 Filas no cargadas porque todos los campos eran nulos.
+
+
+Espacio asignado a matriz de enlace:          1047222 bytes (99 filas)
+Bytes de buffer de lectura: 1048576
+
+Total de registros lógicos omitidos:          1
+Total de registros lógicos leídos:       89471
+Total de registros lógicos rechazados:         0
+Total de registros lógicos desechados:        0
+
+La ejecución empezó en Sáb Sep 25 08:56:08 2021
+La ejecución terminó en Sáb Sep 25 09:00:22 2021
+
+Tiempo transcurrido:     00:04:13.45
+Tiempo de CPU:         00:00:03.13
